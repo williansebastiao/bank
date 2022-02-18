@@ -31,7 +31,7 @@ class TransferController extends Controller
     public function make(Request $request): object
     {
         try {
-            $obj = $request->only(['value', 'transfer_date', 'sender', 'receiver']);
+            $obj = $request->only(['value', 'transfer_date', 'sender', 'receiver', 'type']);
             return $this->service->make($obj);
         } catch (\Exception $e) {
             return response()->json(['message' => $e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);

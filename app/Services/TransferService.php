@@ -5,6 +5,7 @@ namespace App\Services;
 
 
 use App\Repositories\TransferRepository;
+use Symfony\Component\HttpFoundation\Response;
 
 class TransferService
 {
@@ -29,6 +30,15 @@ class TransferService
      */
     public function make(Array $data): object
     {
-        return $this->repository->make($data);
+        try {
+            $type = $data['type'];
+            if($type === 1) {
+                return response()->json(['message' => 'Você não tem permissão para fazer transferência'], Response::HTTP_UNPROCESSABLE_ENTITY);
+            }
+            return $this->repository->make($data);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
     }
 }
