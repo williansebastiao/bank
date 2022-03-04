@@ -32,7 +32,7 @@ class TransferRepository implements TransferInterface
             $value = (float) $data['value'];
             $balance = (float) $this->wallet->where('user_id', $user_id)->first()->value;
             $balanceReceiver = (float) $this->wallet->where('user_id', $receiver)->first()->value;
-            
+
             if($balance < $value) {
                 return response()->json(['message' => 'Saldo insuficiente'], Response::HTTP_UNPROCESSABLE_ENTITY);
             }
